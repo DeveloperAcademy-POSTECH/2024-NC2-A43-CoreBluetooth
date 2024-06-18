@@ -15,6 +15,12 @@
 		00CD654E2C217FA300355F81 /* BongSooTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CD654D2C217FA300355F81 /* BongSooTests.swift */; };
 		00CD65582C217FA300355F81 /* BongSooUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CD65572C217FA300355F81 /* BongSooUITests.swift */; };
 		00CD655A2C217FA300355F81 /* BongSooUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CD65592C217FA300355F81 /* BongSooUITestsLaunchTests.swift */; };
+		00CD65672C217FF300355F81 /* OnBoarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CD65662C217FF300355F81 /* OnBoarding.swift */; };
+		00CD65692C21800000355F81 /* BTPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CD65682C21800000355F81 /* BTPage.swift */; };
+		00CD656B2C21800600355F81 /* FirstPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CD656A2C21800600355F81 /* FirstPage.swift */; };
+		00CD656D2C21800C00355F81 /* SecondPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CD656C2C21800C00355F81 /* SecondPage.swift */; };
+		00CD656F2C21801300355F81 /* ThirdPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CD656E2C21801300355F81 /* ThirdPage.swift */; };
+		00CD65712C21801D00355F81 /* FourthPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CD65702C21801D00355F81 /* FourthPage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +53,12 @@
 		00CD65532C217FA300355F81 /* BongSooUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BongSooUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00CD65572C217FA300355F81 /* BongSooUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BongSooUITests.swift; sourceTree = "<group>"; };
 		00CD65592C217FA300355F81 /* BongSooUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BongSooUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		00CD65662C217FF300355F81 /* OnBoarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoarding.swift; sourceTree = "<group>"; };
+		00CD65682C21800000355F81 /* BTPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTPage.swift; sourceTree = "<group>"; };
+		00CD656A2C21800600355F81 /* FirstPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstPage.swift; sourceTree = "<group>"; };
+		00CD656C2C21800C00355F81 /* SecondPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondPage.swift; sourceTree = "<group>"; };
+		00CD656E2C21801300355F81 /* ThirdPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdPage.swift; sourceTree = "<group>"; };
+		00CD65702C21801D00355F81 /* FourthPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourthPage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +111,12 @@
 			children = (
 				00CD65392C217FA200355F81 /* BongSooApp.swift */,
 				00CD653B2C217FA200355F81 /* ContentView.swift */,
+				00CD65662C217FF300355F81 /* OnBoarding.swift */,
+				00CD65682C21800000355F81 /* BTPage.swift */,
+				00CD656A2C21800600355F81 /* FirstPage.swift */,
+				00CD656C2C21800C00355F81 /* SecondPage.swift */,
+				00CD656E2C21801300355F81 /* ThirdPage.swift */,
+				00CD65702C21801D00355F81 /* FourthPage.swift */,
 				00CD653D2C217FA200355F81 /* Item.swift */,
 				00CD653F2C217FA300355F81 /* Assets.xcassets */,
 				00CD65412C217FA300355F81 /* BongSoo.entitlements */,
@@ -264,7 +282,13 @@
 			files = (
 				00CD653C2C217FA200355F81 /* ContentView.swift in Sources */,
 				00CD653E2C217FA200355F81 /* Item.swift in Sources */,
+				00CD656F2C21801300355F81 /* ThirdPage.swift in Sources */,
+				00CD65672C217FF300355F81 /* OnBoarding.swift in Sources */,
+				00CD656D2C21800C00355F81 /* SecondPage.swift in Sources */,
 				00CD653A2C217FA200355F81 /* BongSooApp.swift in Sources */,
+				00CD65692C21800000355F81 /* BTPage.swift in Sources */,
+				00CD65712C21801D00355F81 /* FourthPage.swift in Sources */,
+				00CD656B2C21800600355F81 /* FirstPage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
