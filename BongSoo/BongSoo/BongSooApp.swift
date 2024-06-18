@@ -1,15 +1,10 @@
-//
-//  BongSooApp.swift
-//  BongSoo
-//
-//  Created by Pil_Gaaang on 6/18/24.
-//
-
 import SwiftUI
 import SwiftData
 
 @main
 struct BongSooApp: App {
+    @StateObject private var pathHolder = NavigationPathHolder()
+
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self,
@@ -25,8 +20,14 @@ struct BongSooApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationStack(path: $pathHolder.navigationPath) {
+                BTPage()
+                    .environmentObject(pathHolder)
+            }
         }
-        .modelContainer(sharedModelContainer)
     }
+}
+
+class NavigationPathHolder: ObservableObject {
+    @Published var navigationPath = NavigationPath()
 }

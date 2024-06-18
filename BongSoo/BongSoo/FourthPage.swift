@@ -1,8 +1,22 @@
-//
-//  FourPage.swift
-//  BongSoo
-//
-//  Created by Pil_Gaaang on 6/18/24.
-//
+import SwiftUI
 
-import Foundation
+struct FourthPage: View {
+    var body: some View {
+        ZStack{
+            Color("DangerousColor")
+                .edgesIgnoringSafeArea(.all)
+            VStack {
+                Text("Fourth Page")
+                    .font(.largeTitle)
+                    .padding()
+            }
+            .navigationTitle("Fourth Page")
+        }
+    }
+}
+
+struct FourthPage_Previews: PreviewProvider {
+    static var previews: some View {
+        FourthPage()
+    }
+}

@@ -1,8 +1,28 @@
-//
-//  ThirdPage.swift
-//  BongSoo
-//
-//  Created by Pil_Gaaang on 6/18/24.
-//
+import SwiftUI
 
-import Foundation
+struct ThirdPage: View {
+    var body: some View {
+        ZStack{
+            Color("WarningColor")
+                .edgesIgnoringSafeArea(.all)
+            
+            VStack {
+                Text("Third Page")
+                    .font(.largeTitle)
+                    .padding()
+                
+                NavigationLink(destination: FourthPage()) {
+                    Text("Go to Fourth Page")
+                }
+                .padding()
+            }
+            .navigationTitle("Third Page")
+        }
+    }
+}
+
+struct ThirdPage_Previews: PreviewProvider {
+    static var previews: some View {
+        ThirdPage()
+    }
+}
