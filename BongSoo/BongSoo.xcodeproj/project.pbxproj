@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		004DD3132C21F94600418F48 /* BTmanager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004DD3122C21F94600418F48 /* BTmanager.swift */; };
+		004DD3152C21FB7600418F48 /* MockPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004DD3142C21FB7600418F48 /* MockPeripheral.swift */; };
 		00CD653A2C217FA200355F81 /* BongSooApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CD65392C217FA200355F81 /* BongSooApp.swift */; };
 		00CD653C2C217FA200355F81 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CD653B2C217FA200355F81 /* ContentView.swift */; };
 		00CD653E2C217FA200355F81 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00CD653D2C217FA200355F81 /* Item.swift */; };
@@ -41,6 +43,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		004DD3112C21F68400418F48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		004DD3122C21F94600418F48 /* BTmanager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTmanager.swift; sourceTree = "<group>"; };
+		004DD3142C21FB7600418F48 /* MockPeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPeripheral.swift; sourceTree = "<group>"; };
 		00CD65362C217FA200355F81 /* BongSoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BongSoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00CD65392C217FA200355F81 /* BongSooApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BongSooApp.swift; sourceTree = "<group>"; };
 		00CD653B2C217FA200355F81 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -109,12 +114,15 @@
 		00CD65382C217FA200355F81 /* BongSoo */ = {
 			isa = PBXGroup;
 			children = (
+				004DD3112C21F68400418F48 /* Info.plist */,
 				00CD65392C217FA200355F81 /* BongSooApp.swift */,
 				00CD653B2C217FA200355F81 /* ContentView.swift */,
 				00CD65662C217FF300355F81 /* OnBoarding.swift */,
 				00CD65682C21800000355F81 /* BTPage.swift */,
 				00CD656A2C21800600355F81 /* FirstPage.swift */,
+				004DD3142C21FB7600418F48 /* MockPeripheral.swift */,
 				00CD656C2C21800C00355F81 /* SecondPage.swift */,
+				004DD3122C21F94600418F48 /* BTmanager.swift */,
 				00CD656E2C21801300355F81 /* ThirdPage.swift */,
 				00CD65702C21801D00355F81 /* FourthPage.swift */,
 				00CD653D2C217FA200355F81 /* Item.swift */,
@@ -283,10 +291,12 @@
 				00CD653C2C217FA200355F81 /* ContentView.swift in Sources */,
 				00CD653E2C217FA200355F81 /* Item.swift in Sources */,
 				00CD656F2C21801300355F81 /* ThirdPage.swift in Sources */,
+				004DD3152C21FB7600418F48 /* MockPeripheral.swift in Sources */,
 				00CD65672C217FF300355F81 /* OnBoarding.swift in Sources */,
 				00CD656D2C21800C00355F81 /* SecondPage.swift in Sources */,
 				00CD653A2C217FA200355F81 /* BongSooApp.swift in Sources */,
 				00CD65692C21800000355F81 /* BTPage.swift in Sources */,
+				004DD3132C21F94600418F48 /* BTmanager.swift in Sources */,
 				00CD65712C21801D00355F81 /* FourthPage.swift in Sources */,
 				00CD656B2C21800600355F81 /* FirstPage.swift in Sources */,
 			);
@@ -451,6 +461,7 @@
 				DEVELOPMENT_TEAM = J5N8Y9F8Z8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BongSoo/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -488,6 +499,7 @@
 				DEVELOPMENT_TEAM = J5N8Y9F8Z8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BongSoo/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
