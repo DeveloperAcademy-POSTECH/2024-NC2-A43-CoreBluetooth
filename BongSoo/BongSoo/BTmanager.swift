@@ -24,16 +24,12 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
     @Published var bluetoothEnabled = false
     @Published var isScanning = false
     @Published var deviceName: String = UIDevice.current.name
-    @Published var connectedDevice: CBPeripheral? {
-        didSet {
-            if let connectedDevice = connectedDevice, let index = discoveredDevices.firstIndex(where: { $0.identifier == connectedDevice.identifier }) {
-                discoveredDevices.remove(at: index)
-            }
-            startReadingRSSI()
-        }
-    }
+    @Published var connectedDevice: CBPeripheral?
+    @Published var connectStrength: Int = 0
     @Published var isConnecting = false
-    @Published var rssiValue: Int? // RSSI 값을 나타내는 변수 추가
+    private var scanTimer: Timer?
+    private var rssiTimer: Timer?
+    private var tempDiscoveredDevices: [CBPeripheral] = []
 
     override init() {
         super.init()
@@ -43,17 +39,37 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
     
     func startScanning() {
         if centralManager.state == .poweredOn {
-            discoveredDevices.removeAll()
+            tempDiscoveredDevices.removeAll()
             isScanning = true
             centralManager.scanForPeripherals(withServices: nil, options: nil)
             print("Scanning started")
+            scanTimer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { _ in
+                self.updateDiscoveredDevices()
+                self.restartScanning()
+            }
         }
     }
     
     func stopScanning() {
         centralManager.stopScan()
         isScanning = false
+        scanTimer?.invalidate()
+        scanTimer = nil
         print("Scanning stopped")
+    }
+    
+    func restartScanning() {
+        if isScanning {
+            stopScanning()
+            startScanning()
+        }
+    }
+    
+    func updateDiscoveredDevices() {
+        print("Updating discovered devices")
+        discoveredDevices = Array(tempDiscoveredDevices.prefix(30))
+        tempDiscoveredDevices.removeAll()
+        print("Discovered Devices: \(discoveredDevices.map { $0.name ?? "Unknown Device" })")
     }
     
     func toggleBluetooth() {
@@ -81,34 +97,40 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         print("Discovered device: \(peripheral.name ?? "Unknown Device"), RSSI: \(RSSI)")
-        if !discoveredDevices.contains(peripheral) {
+        if !tempDiscoveredDevices.contains(peripheral) {
             peripheral.rssiValue = RSSI
-            discoveredDevices.append(peripheral)
+            tempDiscoveredDevices.append(peripheral)
             peripheral.delegate = self
         } else {
-            if let index = discoveredDevices.firstIndex(where: { $0.identifier == peripheral.identifier }) {
-                discoveredDevices[index].rssiValue = RSSI
+            if let index = tempDiscoveredDevices.firstIndex(where: { $0.identifier == peripheral.identifier }) {
+                tempDiscoveredDevices[index].rssiValue = RSSI
             }
+        }
+        tempDiscoveredDevices.sort { ($0.rssiValue?.intValue ?? Int.min) > ($1.rssiValue?.intValue ?? Int.min) }
+        if tempDiscoveredDevices.count > 30 {
+            tempDiscoveredDevices = Array(tempDiscoveredDevices.prefix(30))
         }
     }
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         if !connectedDevices.contains(where: { $0.identifier == peripheral.identifier }) {
             connectedDevices.append(peripheral)
-            connectedDevice = peripheral
             peripheral.delegate = self
+            updateConnectedDeviceInfo(peripheral)
             isConnecting = false
+            startReadingRSSI()
         }
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         if let index = connectedDevices.firstIndex(where: { $0.identifier == peripheral.identifier }) {
             connectedDevices.remove(at: index)
-            if connectedDevice == peripheral {
+            if connectedDevice?.name == peripheral.name {
                 connectedDevice = nil
-                rssiValue = nil // 연결이 끊어지면 RSSI 값을 nil로 설정
+                connectStrength = 0
             }
         }
+        stopReadingRSSI()
     }
     
     func connectToDevice(_ peripheral: CBPeripheral) {
@@ -117,21 +139,33 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
     }
 
     private func loadConnectedDevices() {
-        // 연결된 기기 목록을 로드하는 역할을 합니다.
+        // 이 함수는 연결된 기기 목록을 로드하는 역할을 합니다.
+        // 연결된 기기 정보를 저장하고 불러오는 로직을 여기에 구현합니다.
+        // 예를 들어, UserDefaults나 데이터베이스를 사용할 수 있습니다.
+        // 이 예제에서는 샘플 데이터를 사용합니다.
+    }
+
+    func updateConnectedDeviceInfo(_ peripheral: CBPeripheral) {
+        connectedDevice = peripheral
+        connectStrength = (peripheral.rssiValue?.intValue ?? -100) + 100
     }
     
     private func startReadingRSSI() {
-        guard let device = connectedDevice else { return }
-        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
-            if self.connectedDevice == nil {
-                timer.invalidate()
-            } else {
-                device.readRSSI()
+        rssiTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+            if let connectedDevice = self.connectedDevice {
+                connectedDevice.readRSSI()
             }
         }
     }
     
+    private func stopReadingRSSI() {
+        rssiTimer?.invalidate()
+        rssiTimer = nil
+    }
+
+    // 필수 델리게이트 메서드 구현
     func peripheral(_ peripheral: CBPeripheral, didModifyServices invalidatedServices: [CBService]) {
+        // 이 메서드는 필수적으로 구현해야 합니다.
     }
 
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
@@ -145,18 +179,18 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         if let characteristics = service.characteristics {
             for characteristic in characteristics {
+                // 특성 처리
             }
         }
     }
     
     func peripheral(_ peripheral: CBPeripheral, didReadRSSI RSSI: NSNumber, error: Error?) {
-        if peripheral == connectedDevice {
+        if peripheral == connectedDevices.first(where: { $0.identifier == peripheral.identifier }) {
             peripheral.rssiValue = RSSI
+            updateConnectedDeviceInfo(peripheral)
             DispatchQueue.main.async {
-                self.rssiValue = RSSI.intValue
                 self.objectWillChange.send()
             }
         }
     }
 }
-
