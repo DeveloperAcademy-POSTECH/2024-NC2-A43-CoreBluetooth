@@ -46,31 +46,26 @@ struct FirstPage: View {
         .background(Color("SafeColor"))
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            updateNavigation(rssi: rssi)
-            if let connectedDevice = bluetoothManager.connectedDevice {
-                rssi = connectedDevice.rssiValue?.intValue ?? rssi
-            }
+            bluetoothManager.startReadingRSSI()
         }
-        .onChange(of: bluetoothManager.connectedDevice?.rssiValue) { newValue in
-            rssi = newValue?.intValue ?? rssi
-            updateNavigation(rssi: rssi)
+        .onDisappear {
+            bluetoothManager.stopReadingRSSI()
+        }
+        .onReceive(bluetoothManager.$rssiValue) { newValue in
+            rssi = newValue
+            updateNavigation(rssi: newValue)
         }
     }
 
     private func updateNavigation(rssi: Int?) {
         if let rssi = rssi {
-            if rssi < -45 {
+            if rssi < -55 {
                 UIApplication.shared.windows.first?.rootViewController = UIHostingController(rootView: SecondPage(bluetoothManager: bluetoothManager, deviceName: deviceName, rssi: rssi))
             }
         }
-//        else {
-//            navigateToDisconnectionPage()
-//        }
     }
 
     private func navigateToDisconnectionPage() {
         UIApplication.shared.windows.first?.rootViewController = UIHostingController(rootView: FourthPage(bluetoothManager: bluetoothManager, deviceName: deviceName, rssi: nil))
     }
 }
-
-
