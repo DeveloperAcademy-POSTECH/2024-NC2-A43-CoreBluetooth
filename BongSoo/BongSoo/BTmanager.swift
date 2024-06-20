@@ -27,6 +27,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
     @Published var connectedDevice: CBPeripheral?
     @Published var connectStrength: Int = 0
     @Published var isConnecting = false
+    @Published var rssiValue: Int = 0
     private var scanTimer: Timer?
     private var rssiTimer: Timer?
     private var tempDiscoveredDevices: [CBPeripheral] = []
@@ -150,7 +151,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
         connectStrength = (peripheral.rssiValue?.intValue ?? -100) + 100
     }
     
-    private func startReadingRSSI() {
+    func startReadingRSSI() {
         rssiTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
             if let connectedDevice = self.connectedDevice {
                 connectedDevice.readRSSI()
@@ -158,38 +159,19 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
         }
     }
     
-    private func stopReadingRSSI() {
+    func stopReadingRSSI() {
         rssiTimer?.invalidate()
         rssiTimer = nil
     }
 
-    // 필수 델리게이트 메서드 구현
-    func peripheral(_ peripheral: CBPeripheral, didModifyServices invalidatedServices: [CBService]) {
-        // 이 메서드는 필수적으로 구현해야 합니다.
-    }
-
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
-        if let services = peripheral.services {
-            for service in services {
-                peripheral.discoverCharacteristics(nil, for: service)
-            }
-        }
-    }
-
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-        if let characteristics = service.characteristics {
-            for characteristic in characteristics {
-                // 특성 처리
-            }
-        }
-    }
-    
     func peripheral(_ peripheral: CBPeripheral, didReadRSSI RSSI: NSNumber, error: Error?) {
         if peripheral == connectedDevices.first(where: { $0.identifier == peripheral.identifier }) {
             peripheral.rssiValue = RSSI
             updateConnectedDeviceInfo(peripheral)
             DispatchQueue.main.async {
+                self.rssiValue = RSSI.intValue
                 self.objectWillChange.send()
+                print("RSSI value updated: \(self.rssiValue)")
             }
         }
     }
