@@ -98,8 +98,9 @@ struct BTPage: View {
                 EmptyView()
             }
         )
-    }
-}
+            }
+        }
+    
 
 struct BTPage_Previews: PreviewProvider {
     static var previews: some View {
