@@ -59,12 +59,13 @@ struct FirstPage: View {
 
     private func updateNavigation(rssi: Int?) {
         if let rssi = rssi {
-            if rssi < -55 {
+            if rssi < -45 {
                 UIApplication.shared.windows.first?.rootViewController = UIHostingController(rootView: SecondPage(bluetoothManager: bluetoothManager, deviceName: deviceName, rssi: rssi))
             }
-        } else {
-            navigateToDisconnectionPage()
         }
+//        else {
+//            navigateToDisconnectionPage()
+//        }
     }
 
     private func navigateToDisconnectionPage() {
@@ -72,8 +73,4 @@ struct FirstPage: View {
     }
 }
 
-struct FirstPage_Previews: PreviewProvider {
-    static var previews: some View {
-        FirstPage(bluetoothManager: BluetoothManager(), deviceName: "Sample Device", rssi: -50)
-    }
-}
+

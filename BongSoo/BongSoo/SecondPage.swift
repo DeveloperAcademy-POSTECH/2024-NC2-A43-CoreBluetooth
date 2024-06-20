@@ -64,18 +64,13 @@ struct SecondPage: View {
             } else if rssi < -65 {
                 UIApplication.shared.windows.first?.rootViewController = UIHostingController(rootView: ThirdPage(bluetoothManager: bluetoothManager, deviceName: deviceName, rssi: rssi))
             }
-        } else {
-            navigateToDisconnectionPage()
         }
+//        else {
+//            navigateToDisconnectionPage()
+//        }
     }
 
     private func navigateToDisconnectionPage() {
         UIApplication.shared.windows.first?.rootViewController = UIHostingController(rootView: FourthPage(bluetoothManager: bluetoothManager, deviceName: deviceName, rssi: nil))
-    }
-}
-
-struct SecondPage_Previews: PreviewProvider {
-    static var previews: some View {
-        SecondPage(bluetoothManager: BluetoothManager(), deviceName: "Sample Device", rssi: -75)
     }
 }

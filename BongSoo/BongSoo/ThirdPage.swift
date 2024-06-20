@@ -59,25 +59,19 @@ struct ThirdPage: View {
 
     private func updateNavigation(rssi: Int?) {
         if let rssi = rssi {
-            if rssi >= -55 {
-                UIApplication.shared.windows.first?.rootViewController = UIHostingController(rootView: FirstPage(bluetoothManager: bluetoothManager, deviceName: deviceName, rssi: rssi))
-            } else if rssi >= -65 {
+            if rssi >= -65 {
                 UIApplication.shared.windows.first?.rootViewController = UIHostingController(rootView: SecondPage(bluetoothManager: bluetoothManager, deviceName: deviceName, rssi: rssi))
-            } else {
+            } 
+//            else if rssi < -100 {
+//                UIApplication.shared.windows.first?.rootViewController = UIHostingController(rootView: FourthPage(bluetoothManager: bluetoothManager, deviceName: deviceName, rssi: rssi))
+//            } 
+            else {
                 navigateToDisconnectionPage()
             }
-        } else {
-            navigateToDisconnectionPage()
         }
     }
 
     private func navigateToDisconnectionPage() {
         UIApplication.shared.windows.first?.rootViewController = UIHostingController(rootView: FourthPage(bluetoothManager: bluetoothManager, deviceName: deviceName, rssi: nil))
-    }
-}
-
-struct ThirdPage_Previews: PreviewProvider {
-    static var previews: some View {
-        ThirdPage(bluetoothManager: BluetoothManager(), deviceName: "Sample Device", rssi: -95)
     }
 }
